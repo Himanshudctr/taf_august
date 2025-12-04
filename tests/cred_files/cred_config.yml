@@ -1,0 +1,37 @@
+sqlserver_dev:
+    url: "jdbc:sqlserver://decautoserver.database.windows.net:1433;database=decauto"
+    user: "decadmin"
+    password: "Dharmavaram1@"
+    driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+sqlserver_qa:
+    url: "jdbc:sqlserver://august2025.database.windows.net:1433;database=augustautodb"
+    user: "autoadmin"
+    password: "Dharmavaram1@"
+    driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+sqlserver_uat:
+    url: "jdbc:sqlserver://august2025.database.windows.net:1433;database=augustautodb"
+    user: "autoadmin"
+    password: "Dharmavaram1@"
+    driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+sqlserver_prod:
+    url: "jdbc:sqlserver://august2025.database.windows.net:1433;database=augustautodb"
+    user: "autoadmin"
+    password: "Dharmavaram1@"
+    driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+postgres:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    user: "postgres"
+    password: "Dharmavaram1@"
+    driver: "org.postgresql.Driver"
+    port: 5432
+
+oracle:
+    url: "jdbc:oracle:thin:@//localhost:1521/xe"
+    user: "hr"
+    password: "HR"
+    driver: "oracle.jdbc.OracleDriver"
+    port: 1521

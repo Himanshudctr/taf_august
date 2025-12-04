@@ -1,0 +1,11 @@
+Transaction ID,Transaction Date,Type,Amount,Description
+1,01/01/2025,Deposit,1500,Salary credit
+2,03/01/2025,Withdrawal,-500,ATM withdrawal
+3,05/01/2025,Deposit,2000,Project bonus
+4,06/01/2025,Transfer,-750,Rent payment
+5,10/01/2025,Deposit,1000,Freelance income
+6,12/01/2025,Withdrawal,-300,Bill payment
+7,15/01/2025,Deposit,1800,Refund received
+8,18/01/2025,Transfer,-600,UPI transfer
+9,20/01/2025,Deposit,2200,Investment return
+10,22/01/2025,Withdrawal,-450,Shopping

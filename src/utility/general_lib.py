@@ -1,0 +1,52 @@
+import json
+
+from py4j.finalizer import clear_finalizers
+from pyspark.sql.types import StructType
+import os
+from pyspark.sql.functions import explode_outer, col
+from pyspark.sql.types import *
+
+clear_finalizers()
+
+
+def read_schema(dir_path):
+    schema_path = os.path.join(dir_path, 'schema.json')
+    # with open("D:/Etl_Automation_Sep_2025/taf_august/tests/table1/schema.json", 'r') as f:
+    with open(schema_path, 'r') as f:
+        schema = StructType.fromJson(json.load(f))
+    return schema
+
+
+def read_sql(dir_path):  # same as def read_schema(dir_path)
+    query_path = os.path.join(dir_path, 'transformation.sql')
+    with open(query_path, 'r') as f:
+        query= f.read()
+    return query
+
+
+def flatten(df):
+    # compute Complex Fields (Lists and Structs) in Schema
+    complex_fields = dict([(field.name, field.dataType)
+                           for field in df.schema.fields
+                           if type(field.dataType) == ArrayType or type(field.dataType) == StructType])
+    while len(complex_fields) != 0:
+        col_name = list(complex_fields.keys())[0]
+        print("Processing :" + col_name + " Type : " + str(type(complex_fields[col_name])))
+
+        # if StructType then convert all sub element to columns.
+        # i.e. flatten structs
+        if type(complex_fields[col_name]) == StructType:
+            expanded = [col(col_name + '.' + k).alias(col_name + '_' + k) for k in
+                        [n.name for n in complex_fields[col_name]]]
+            df = df.select("*", *expanded).drop(col_name)
+
+        # if ArrayType then add the Array Elements as Rows using the explode function
+        # i.e. explode Arrays
+        elif type(complex_fields[col_name]) == ArrayType:
+            df = df.withColumn(col_name, explode_outer(col_name))
+
+        # recompute remaining Complex Fields in Schema
+        complex_fields = dict([(field.name, field.dataType)
+                               for field in df.schema.fields
+                               if type(field.dataType) == ArrayType or type(field.dataType) == StructType])
+    return df
